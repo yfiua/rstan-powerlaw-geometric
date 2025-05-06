@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('synthetic_data_pl.csv')
 
-tau = df['tau'].values
+tau = df['x'].values
 
 bins = np.unique(tau)
 hist, _ = np.histogram(tau, np.append(bins, max(bins)+1))
@@ -24,7 +24,7 @@ plt.loglog(bins, hist, '.', label='synthetic')
 plt.xlabel(r'# Timesteps t')
 plt.ylabel('Frequency')
 
-plt.savefig('synthetic_data_pl.pdf', dpi=300, bbox_inches='tight')
+plt.savefig('synthetic_data_pl.png', dpi=300, bbox_inches='tight')
 
 ccdf = np.cumsum(hist[::-1])[::-1]
 ccdf = ccdf / ccdf[0]
@@ -34,11 +34,10 @@ plt.clf()
 plt.loglog(bins, ccdf)
 plt.xlabel(r'# Timesteps t')
 plt.ylabel(r'P($\tau$ >= t)')
-plt.savefig('synthetic_data_pl_ccdf.pdf', dpi=300, bbox_inches='tight')
-
+plt.savefig('synthetic_data_pl_ccdf.png', dpi=300, bbox_inches='tight')
 
 # fit power law
-fit = powerlaw.Fit(tau, discrete=True, xmin=1)
+fit = powerlaw.Fit(tau, discrete=True)
 alpha = fit.power_law.alpha
 xmin = fit.power_law.xmin
 print(f"alpha: {alpha}")
