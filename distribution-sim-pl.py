@@ -2,6 +2,7 @@
 # coding: utf-8
 import pandas as pd
 import numpy as np
+import powerlaw
 
 import matplotlib.pyplot as plt
 
@@ -35,3 +36,10 @@ plt.xlabel(r'# Timesteps t')
 plt.ylabel(r'P($\tau$ >= t)')
 plt.savefig('synthetic_data_pl_ccdf.pdf', dpi=300, bbox_inches='tight')
 
+
+# fit power law
+fit = powerlaw.Fit(tau, discrete=True, xmin=1)
+alpha = fit.power_law.alpha
+xmin = fit.power_law.xmin
+print(f"alpha: {alpha}")
+print(f"xmin: {xmin}")

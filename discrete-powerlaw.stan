@@ -1,32 +1,30 @@
 data {
-  int<lower=1> n;
-  int y[n];
+  int<lower=1> N;
+  array[N] int<lower=1> y;  // observed durations
+  int<lower=1> k_min;
+  int<lower=1> k_max;       // for zeta approx
+}
+
+transformed data {
+  int K = k_max - k_min + 1;
+  vector[K] k_vals;
+  for (i in 1:K) {
+    k_vals[i] = k_min + i - 1;
+  }
 }
 
 parameters {
-  real<lower=0> r;
-  real<lower=0> alpha;
-  real<lower=0> beta;
-  real<lower=0> sigma_e;
+  real alpha;   // exponent
 }
 
 model {
-  target += lognormal_lpdf(alpha | 0, .5);
-  target += lognormal_lpdf(beta | 1, .5);
-  target += gamma_lpdf(r | 1, 3);
-  target += gamma_lpdf(sigma_e | 0.5, 5);
+  real zeta_approx = 0;
+  for (i in 1:K)
+    zeta_approx += pow(k_vals[i], -alpha);
 
-  for (trial in 1:n) {
-    target += normal_lpdf(y[trial] | alpha + beta * trial^(-r), sigma_e);
+  for (i in 1:N) {
+    target += -alpha * log(y[i]) - log(zeta_approx);
   }
-}
 
-generated quantities {
-  real ypred[n];
-  real log_lik[n];
-
-  for (trial in 1:n) {
-    ypred[trial] = normal_rng(alpha + beta * trial^(-r), sigma_e);
-    log_lik[trial] = normal_lpdf(y[trial] | alpha + beta * trial^(-r), sigma_e);
-  }
+  // alpha ~ normal(2, 1);
 }
