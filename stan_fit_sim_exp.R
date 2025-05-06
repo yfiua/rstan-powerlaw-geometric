@@ -27,9 +27,9 @@ fit <- sampling(
 )
 
 # print the results
-print(fit, pars = c("alpha"))
+print(fit, pars = c("p"))
 
 # a nicer summary
 pdf(file="mcmc-hist-exp.pdf")
 posterior <- as.matrix(fit)
-mcmc_hist(posterior, pars = c("alpha"))
+mcmc_hist(posterior, pars = c("p"))
