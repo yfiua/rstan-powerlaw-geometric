@@ -4,10 +4,11 @@ Distinguish power-law and geometric (discrete exponential) distributions using R
 
 ## Synthetic data
 
-* [sim-pl.R](sim-pl.R): generate synthetic data that exhibits power-law with exponent $-2$
+* [sim-pl.R](sim-pl.R): generate synthetic data that exhibits power-law with exponent $\alpha = -2$
 * [sim-exp.R](sim-exp.R): generate synthetic data that exhibits geometric distribution with $p=.2$
 
-Example data and their distributions can be found in the `data/` directory.
+Generated data can be found in the `data/` directory.
+Example data and their distributions can be found in the `data-example/` directory.
 
 ## Model fitting and comparison
 
@@ -15,9 +16,17 @@ Example data and their distributions can be found in the `data/` directory.
 * [discrete-exponential.stan](discrete-exponential.stan): Stan model for geometric distribution
 * [stan-fit-sim-pl.R](stan-fit-sim-pl.R): fit the power-law model with data
 * [stan-fit-sim-exp.R](stan-fit-sim-exp.R): fit the geometric model with data
-* [model-comparison.R](model-comparison.R): compute the Bayes factor of the two models using bridge sampling
+* [model-comparison.R](model-comparison.R): compute the Bayes factor of the two models using bridge sampling, with power-law distributed synthetic data
 
-Example results can be found in the `results/` directory.
+Results can be found in the `results/` directory.
+
+## Results
+
+Rstan should give the posterior distributions for the power-law exponent $\alpha$ and the success probability $p$ for the geometric distribution.
+
+It should estimate the Bayes factor of the two models as `Inf`, meaning it strongly favors the power-law distribution.
+
+Example results are in the `results-example/` directory.
 
 ## Reproducibility
 
