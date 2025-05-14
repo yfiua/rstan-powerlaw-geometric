@@ -21,11 +21,14 @@ Example results can be found in the `results/` directory.
 
 ## Reproducibility
 
+### Environment
 To reproduce the results, set up the environment in `renv.lock` with:
 
 ```r
 renv::restore()
 ```
+
+### Reproduce results
 
 Then use [stu](https://github.com/kunegis/stu) to build all results:
 
@@ -39,7 +42,11 @@ Clean up the results with:
 stu @clean
 ```
 
-Alternatively, run the scripts manually.
+Alternatively, run the script `run.sh` to build the results:
+
+```
+./run.sh
+```
 
 ## References
 
