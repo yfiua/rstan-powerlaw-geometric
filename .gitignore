@@ -4,7 +4,8 @@ results/
 
 # R
 *.rds
-*.Rprofile
+.Rprofile
+.Rhistory
 renv/
 
 # Byte-compiled / optimized / DLL files
