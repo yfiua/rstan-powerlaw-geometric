@@ -1,0 +1,47 @@
+% version 2.5
+
+@all: @data @results;
+
+@data: data/synthetic_data_pl.csv data/synthetic_data_exp.csv;
+
+data/synthetic_data_pl.csv: sim-pl.R -p data/
+{
+    Rscript sim-pl.R
+}
+
+data/synthetic_data_exp.csv: sim-exp.R -p data/
+{
+    Rscript sim-exp.R
+}
+
+data/
+{
+    mkdir -p data/
+}
+
+@results: results/mcmc-hist-pl.pdf results/mcmc-hist-exp.pdf results/model-comparison;
+
+results/mcmc-hist-pl.pdf: stan-fit-sim-pl.R discrete-powerlaw.stan data/synthetic_data_pl.csv -p results/
+{
+    Rscript stan-fit-sim-pl.R
+}
+
+results/mcmc-hist-exp.pdf: stan-fit-sim-exp.R discrete-exponential.stan data/synthetic_data_exp.csv -p results/
+{
+    Rscript stan-fit-sim-exp.R
+}
+
+>results/model-comparison: model-comparison.R data/synthetic_data_pl.csv -p results/
+{
+    Rscript model-comparison.R
+}
+
+results/
+{
+    mkdir -p results/
+}
+
+@clean:
+{
+    rm -rf data/ results/
+}

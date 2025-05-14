@@ -1,5 +1,11 @@
+# Project specific
+data/
+results/
+
 # R
 *.rds
+*.Rprofile
+renv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

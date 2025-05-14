@@ -7,7 +7,7 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 # read data
-synthetic_data <- read_csv("synthetic_data_pl.csv")
+synthetic_data <- read_csv("data/synthetic_data_pl.csv")
 
 stan_data <- list(N = nrow(synthetic_data),
                   y = synthetic_data$x,
@@ -35,6 +35,7 @@ fit_exp <- sampling(
   seed = 123
 )
 
+# calculate bayes factor
 bayes_factor(
   bridge_sampler(fit_pl, silent = TRUE),
   bridge_sampler(fit_exp, silent = TRUE)
