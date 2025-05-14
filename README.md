@@ -4,7 +4,7 @@ Distinguish power-law and geometric (discrete exponential) distributions using R
 
 ## Synthetic data
 
-* [sim-pl.R](sim-pl.R): generate synthetic data that exhibits power-law with exponent $\alpha = -2$
+* [sim-pl.R](sim-pl.R): generate synthetic data that exhibits power-law with exponent $\alpha = 2$
 * [sim-exp.R](sim-exp.R): generate synthetic data that exhibits geometric distribution with $p=.2$
 
 Generated data can be found in the `data/` directory.
