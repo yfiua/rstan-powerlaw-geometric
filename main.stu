@@ -19,7 +19,7 @@ data/
     mkdir -p data/
 }
 
-@results: results/mcmc-hist-pl.pdf results/mcmc-hist-exp.pdf results/model-comparison;
+@results: results/mcmc-hist-pl.pdf results/mcmc-hist-exp.pdf results/model-comparison-pl results/model-comparison-exp;
 
 results/mcmc-hist-pl.pdf: stan-fit-sim-pl.R discrete-powerlaw.stan data/synthetic_data_pl.csv -p results/
 {
@@ -31,9 +31,14 @@ results/mcmc-hist-exp.pdf: stan-fit-sim-exp.R discrete-exponential.stan data/syn
     Rscript stan-fit-sim-exp.R
 }
 
->results/model-comparison: model-comparison.R data/synthetic_data_pl.csv -p results/
+>results/model-comparison-pl: model-comparison-exp.R data/synthetic_data_pl.csv -p results/
 {
-    Rscript model-comparison.R
+    Rscript model-comparison-pl.R
+}
+
+>results/model-comparison-exp: model-comparison-exp.R data/synthetic_data_exp.csv -p results/
+{
+    Rscript model-comparison-exp.R
 }
 
 results/

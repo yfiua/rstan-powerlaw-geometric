@@ -16,4 +16,5 @@ Rscript stan-fit-sim-pl.R
 Rscript stan-fit-sim-exp.R
 
 ## model comparison
-Rscript model-comparison.R > results/model-comparison
+Rscript model-comparison-pl.R > results/model-comparison-pl
+Rscript model-comparison-exp.R > results/model-comparison-exp
