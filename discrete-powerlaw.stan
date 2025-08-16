@@ -8,10 +8,20 @@ parameters {
 }
 
 transformed parameters {
-  // estimate the zeta function for alpha
-  real zeta_approx = 0;
-  for (i in 1:1000)
-    zeta_approx += pow(i, -alpha);
+  // estimate the zeta function for alpha using Kahan summation
+  real zeta_approx;
+  {
+    real sum = 0;
+    real c = 0;   // compensation
+    for (i in 1:1000) {
+      real term = exp(-alpha * log(i));  // numerically stable version of pow(i, -alpha)
+      real y_k = term - c;
+      real t = sum + y_k;
+      c = (t - sum) - y_k;
+      sum = t;
+    }
+    zeta_approx = sum;
+  }
 }
 
 model {

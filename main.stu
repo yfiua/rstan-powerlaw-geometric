@@ -31,12 +31,12 @@ results/mcmc-hist-exp.pdf: stan-fit-sim-exp.R discrete-exponential.stan data/syn
     Rscript stan-fit-sim-exp.R
 }
 
->results/model-comparison-pl: model-comparison-exp.R data/synthetic_data_pl.csv -p results/
+>results/model-comparison-pl: model-comparison-exp.R data/synthetic_data_pl.csv -p results/ discrete-powerlaw.stan discrete-exponential.stan
 {
     Rscript model-comparison-pl.R
 }
 
->results/model-comparison-exp: model-comparison-exp.R data/synthetic_data_exp.csv -p results/
+>results/model-comparison-exp: model-comparison-exp.R data/synthetic_data_exp.csv -p results/ discrete-powerlaw.stan discrete-exponential.stan
 {
     Rscript model-comparison-exp.R
 }
