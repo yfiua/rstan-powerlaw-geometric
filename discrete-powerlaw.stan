@@ -1,32 +1,28 @@
 data {
-  int<lower=1> N;
-  array[N] int<lower=1> y;  // observed durations
+  int<lower=1> N;           // number of observations
+  array[N] int<lower=1> y;  // observations
+}
+
+transformed data {
+  int K = 1000;
+  vector[K] logk;
+  for (k in 1:K)
+    logk[k] = log(k);
 }
 
 parameters {
-  real alpha;   // exponent
+  real alpha;   // power-law exponent
 }
 
 transformed parameters {
-  // estimate the zeta function for alpha using Kahan summation
-  real zeta_approx;
-  {
-    real sum = 0;
-    real c = 0;   // compensation
-    for (i in 1:1000) {
-      real term = exp(-alpha * log(i));  // numerically stable version of pow(i, -alpha)
-      real y_k = term - c;
-      real t = sum + y_k;
-      c = (t - sum) - y_k;
-      sum = t;
-    }
-    zeta_approx = sum;
-  }
+  // estimate the log zeta function using the first K terms
+  real log_zeta_approx = log_sum_exp(-alpha * logk);
 }
 
 model {
   // target
-  target += -alpha * sum(log(to_vector(y))) - N * log(zeta_approx);
+  target += -alpha * sum(log(to_vector(y))) - N * log_zeta_approx;
 
+  // priors
   // alpha ~ normal(2, 1);
 }

@@ -1,6 +1,6 @@
 data {
-  int<lower=1> N;
-  array[N] int<lower=1> y;  // observed durations
+  int<lower=1> N;           // number of observations
+  array[N] int<lower=1> y;  // observations
 }
 
 parameters {
